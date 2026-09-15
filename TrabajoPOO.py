@@ -1,3 +1,5 @@
+###Ejercicio 1: Sistema de Gestión de LIBROS###
+
 from excepciones import LibroNoEncontradoError, SinStockError
 
 class Libro:
@@ -38,3 +40,52 @@ class Biblioteca:
     def devolver_libro(self, isbn: str):
         libro = self.buscar_libro(isbn)
         libro.devolver()
+
+##Ejercicio 2: Sistema de Gestión de FACULTAD##
+
+from excepciones import MateriaNoEncontradaError, CupoLlenoError, EstudianteYaInscriptoError
+
+class Estudiante:
+    def __init__(self, legajo: str, nombre: str):
+        self.legajo = legajo
+        self.nombre = nombre
+
+    def __str__(self):
+        return f"[{self.legajo}] {self.nombre}"
+
+
+class Materia:
+    def __init__(self, codigo: str, nombre: str, cupo_maximo: int):
+        self.codigo = codigo
+        self.nombre = nombre
+        self.cupo_maximo = cupo_maximo
+        self.estudiantes_inscriptos = {}  # {legajo: Estudiante}
+
+    def inscribir_estudiante(self, estudiante: Estudiante):
+        if estudiante.legajo in self.estudiantes_inscriptos:
+            raise EstudianteYaInscriptoError(
+                f"El estudiante {estudiante.nombre} ya está inscripto en {self.nombre}."
+            )
+        if len(self.estudiantes_inscriptos) >= self.cupo_maximo:
+            raise CupoLlenoError(
+                f"No hay cupo disponible en la materia {self.nombre} (Máximo: {self.cupo_maximo})."
+            )
+        self.estudiantes_inscriptos[estudiante.legajo] = estudiante
+
+
+class Facultad:
+    def __init__(self, nombre: str):
+        self.nombre = nombre
+        self.materias = {}  # {codigo_materia: Materia}
+
+    def agregar_materia(self, materia: Materia):
+        self.materias[materia.codigo] = materia
+
+    def buscar_materia(self, codigo: str) -> Materia:
+        if codigo not in self.materias:
+            raise MateriaNoEncontradaError(f"La materia con código '{codigo}' no existe.")
+        return self.materias[codigo]
+
+    def inscribir_alumno_en_materia(self, codigo_materia: str, estudiante: Estudiante):
+        materia = self.buscar_materia(codigo_materia)
+        materia.inscribir_estudiante(estudiante)
