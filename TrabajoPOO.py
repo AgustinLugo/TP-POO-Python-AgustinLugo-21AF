@@ -41,6 +41,15 @@ class Biblioteca:
         libro = self.buscar_libro(isbn)
         libro.devolver()
 
+#Plan de pruebas:  
+| ID | Módulo / Clase | Escenario / Acción de Prueba | Excepción Esperada | Resultado Esperado / Mensaje Lanzado | Estado |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **CP-01** | `Biblioteca` / `GestorLibros` | Buscar o devolver un libro pasando un ISBN que no existe en el sistema. | `LibroNoEncontradoError` | Notifica que el libro no existe. | Aprobado |
+| **CP-02** | `Libro` | Intentar prestar un libro cuya cantidad/stock disponible es `0`. | `SinStockError` | Interrumpe el préstamo notificando que no quedan ejemplares. | Aprobado |
+| **CP-03** | `Facultad` | Buscar o inscribir en una materia con un código inexistente (ej. `"MAT999"`). | `MateriaNoEncontradaError` | Lanza: `"La materia con código 'MAT999' no existe."` | Aprobado |
+| **CP-04** | `Materia` | Intentar inscribir a un estudiante en una materia que alcanzó su `cupo_maximo`. | `CupoLlenoError` | Lanza: `"No hay cupo disponible en la materia [Nombre] (Máximo: [Cupo])."` | Aprobado |
+| **CP-05** | `Materia` | Inscribir a un estudiante cuyo legajo ya figura en `estudiantes_inscriptos`. | `EstudianteYaInscriptoError` | Lanza: `"El estudiante [Nombre] ya está inscripto en [NombreMateria]."` | Aprobado |
+
 ##Ejercicio 2: Sistema de Gestión de FACULTAD##
 
 from excepciones import MateriaNoEncontradaError, CupoLlenoError, EstudianteYaInscriptoError
@@ -89,3 +98,7 @@ class Facultad:
     def inscribir_alumno_en_materia(self, codigo_materia: str, estudiante: Estudiante):
         materia = self.buscar_materia(codigo_materia)
         materia.inscribir_estudiante(estudiante)
+
+### Plan de Pruebas: Ejercicio 2 (Facultad)
+| ID | Módulo / Clase | Escenario / Acción de Prueba | Excepción Esperada | Resultado Esperado / Mensaje Lanzado | Estado |
+| :--- | :--- | :--- | :--- | :--- | :--- |
