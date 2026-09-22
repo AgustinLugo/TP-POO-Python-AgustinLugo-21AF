@@ -1,5 +1,5 @@
 # Plan de Pruebas: 
-#Plan de pruebas:  
+
 | ID | Módulo / Clase | Escenario / Acción de Prueba | Excepción Esperada | Resultado Esperado / Mensaje Lanzado | Estado |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **CP-01** | `Biblioteca` / `GestorLibros` | Buscar o devolver un libro pasando un ISBN que no existe en el sistema. | `LibroNoEncontradoError` | Notifica que el libro no existe. | Aprobado |
